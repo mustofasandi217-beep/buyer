@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Gateway - Tema Bulan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a2463, #1e3a8a, #3b82f6);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .moon {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle at 30px 30px, #f8fafc, #e2e8f0);
+            border-radius: 50%;
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.7);
+            z-index: 1;
+        }
+
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            z-index: 2;
+            margin-top: 40px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .payment-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .payment-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .payment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .payment-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+        }
+
+        .payment-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .payment-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .payment-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .payment-details {
+            margin-top: 15px;
+        }
+
+        .payment-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .payment-label {
+            font-weight: 500;
+            opacity: 0.8;
+        }
+
+        .payment-value {
+            font-weight: 600;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .social-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .social-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .social-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #3b82f6;
+        }
+
+        .social-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .social-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .social-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            color: #1e3a8a;
+            padding: 12px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-weight: 500;
+        }
+
+        @media (max-width: 600px) {
+            .moon {
+                width: 80px;
+                height: 80px;
+                top: 15px;
+                right: 15px;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .payment-section, .social-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="moon"></div>
+    <div class="stars" id="stars"></div>
+    
+    <div class="container">
+        <header>
+            <h1>Payment Gateway</h1>
+            <p>Pilih metode pembayaran yang tersedia</p>
+        </header>
+        
+        <div class="payment-section">
+            <div class="payment-card">
+                <div class="payment-header">
+                    <div class="payment-icon" style="background: rgba(37, 211, 102, 0.2);">
+                        <i class="fas fa-wallet" style="color: #25d366;"></i>
+                    </div>
+                    <div class="payment-title">DANA</div>
+                </div>
+                <div class="payment-details">
+                    <div class="payment-item">
+                        <span class="payment-label">Nomor:</span>
+                        <span class="payment-value">083831844698</span>
+                        <button class="copy-btn" data-text="083831844698">Salin</button>
+                    </div>
+                    <div class="payment-item">
+                        <span class="payment-label">Nama:</span>
+                        <span class="payment-value">Ucucpesano</span>
+                        <button class="copy-btn" data-text="Ucucpesano">Salin</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="payment-card">
+                <div class="payment-header">
+                    <div class="payment-icon" style="background: rgba(0, 172, 238, 0.2);">
+                        <i class="fab fa-google-wallet" style="color: #00acee;"></i>
+                    </div>
+                    <div class="payment-title">GOPAY</div>
+                </div>
+                <div class="payment-details">
+                    <div class="payment-item">
+                        <span class="payment-label">Nomor:</span>
+                        <span class="payment-value">083831844698</span>
+                        <button class="copy-btn" data-text="083831844698">Salin</button>
+                    </div>
+                    <div class="payment-item">
+                        <span class="payment-label">Nama:</span>
+                        <span class="payment-value">yuwlak</span>
+                        <button class="copy-btn" data-text="yuwlak">Salin</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="social-section">
+            <div class="social-card">
+                <div class="social-icon">
+                    <i class="fab fa-telegram"></i>
+                </div>
+                <div class="social-title">Channel Telegram</div>
+                <p>Bergabung dengan channel kami untuk info terbaru</p>
+                <a href="https://t.me/Anoysz" class="social-link" target="_blank">@Anoysz</a>
+            </div>
+            
+            <div class="social-card">
+                <div class="social-icon">
+                    <i class="fas fa-comment"></i>
+                </div>
+                <div class="social-title">Chat Telegram</div>
+                <p>Hubungi kami melalui chat Telegram</p>
+                <a href="https://t.me/byVanosy" class="social-link" target="_blank">@byVanosy</a>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 Payment Gateway. All rights reserved.</p>
+    </footer>
+    
+    <div class="notification" id="notification">Teks berhasil disalin!</div>
+
+    <script>
+        // Membuat bintang-bintang
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.style.width = `${Math.random() * 3}px`;
+            star.style.height = star.style.width;
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.animationDelay = `${Math.random() * 3}s`;
+            starsContainer.appendChild(star);
+        }
+        
+        // Fungsi untuk menyalin teks
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const text = this.getAttribute('data-text');
+                navigator.clipboard.writeText(text).then(() => {
+                    showNotification('Teks berhasil disalin: ' + text);
+                });
+            });
+        });
+        
+        // Fungsi untuk menampilkan notifikasi
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.opacity = '1';
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
